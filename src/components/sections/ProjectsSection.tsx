@@ -1,95 +1,170 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
-import SectionLabel from '@/components/ui/SectionLabel';
-import GlassCard from '@/components/ui/GlassCard';
-import CTAButton from '@/components/ui/CTAButton';
-import PurpleGlow from '@/components/ui/PurpleGlow';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { useRef } from 'react';
 import { projects } from '@/lib/data';
 
 export default function ProjectsSection() {
-  const prefersReducedMotion = useReducedMotion();
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-100px' });
+  const prefersReduced = useReducedMotion();
 
   return (
-    <section id="work" className="relative py-24 sm:py-32 overflow-hidden">
+    <section
+      id="work"
+      ref={ref}
+      style={{
+        padding: '100px 24px',
+        maxWidth: 1200,
+        margin: '0 auto',
+        position: 'relative',
+      }}
+    >
       {/* Background glow */}
-      <PurpleGlow
-        size={500}
-        color="rgba(108, 59, 255, 0.12)"
-        className="bottom-0 right-0 translate-x-1/4 translate-y-1/4"
+      <div
+        className="glow-orb"
+        style={{
+          width: 500,
+          height: 500,
+          background: 'radial-gradient(circle, rgba(108,59,255,0.10) 0%, transparent 70%)',
+          bottom: 0,
+          right: -100,
+        }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* FIX 6: Section label formatted with spaces "04 / الأعمال" */}
-        <SectionLabel number="04" label="الأعمال" />
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <motion.div
+          initial={prefersReduced ? false : { opacity: 0, x: 20 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          style={{ marginBottom: 16 }}
+        >
+          <span className="section-label">04 / الأعمال</span>
+        </motion.div>
 
         <motion.h2
-          initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
-          whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4 text-white"
+          initial={prefersReduced ? false : { opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          style={{
+            fontSize: 'clamp(28px, 4vw, 46px)',
+            fontWeight: 900,
+            lineHeight: 1.3,
+            marginBottom: 12,
+            color: '#FFFFFF',
+          }}
         >
-          <span className="block">شغل حقيقي.</span>
-          <span className="block text-brand-purple-glow mt-1">نتائج ملموسة.</span>
+          شغل حقيقي.<br />
+          <span style={{ color: '#9B6DFF' }}>نتائج ملموسة.</span>
         </motion.h2>
 
         <motion.p
-          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-          whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-brand-soft-white/70 text-lg mb-8 max-w-2xl leading-relaxed"
+          initial={prefersReduced ? false : { opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          style={{
+            fontSize: 18,
+            color: 'rgba(245,243,250,0.7)',
+            marginBottom: 30,
+            maxWidth: 600,
+          }}
         >
           مجموعة من التجارب العملية والمشاريع اللي اشتغلنا عليها.
         </motion.p>
 
         {/* Disclaimer Banner */}
-        <motion.div
-          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-          whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="glass-card p-4 sm:p-5 mb-12 border-brand-purple/20 max-w-3xl rounded-xl"
+        <div
+          className="glass-card"
+          style={{
+            padding: '16px 20px',
+            marginBottom: 40,
+            maxWidth: 700,
+            borderColor: 'rgba(155,109,255,0.25)',
+          }}
         >
-          <p className="text-brand-soft-white/70 text-sm flex items-start gap-3">
-            <span className="text-brand-purple-glow text-base flex-shrink-0">⚡</span>
-            <span>كل المشاريع المعروضة هنا إما تجارب شخصية أو نماذج أولية — مش مشاريع عملاء حقيقيين في هذه المرحلة.</span>
+          <p style={{ margin: 0, fontSize: 14, color: 'rgba(245,243,250,0.65)', lineHeight: 1.6 }}>
+            ⚡ كل المشاريع المعروضة هنا إما تجارب شخصية أو نماذج أولية — مش مشاريع عملاء حقيقيين في هذه المرحلة.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Project cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
-          {projects.map((project, index) => (
-            <GlassCard key={project.title} className="p-8 flex flex-col justify-between" delay={index * 0.1}>
+        {/* Projects Grid */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: 20,
+            marginBottom: 60,
+          }}
+        >
+          {projects.map((p, i) => (
+            <motion.div
+              key={i}
+              className="glass-card"
+              initial={prefersReduced ? false : { opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
+              style={{
+                padding: 28,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
               <div>
-                {/* Status badge */}
-                <div className="mb-5">
-                  <span className="inline-flex px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/25">
-                    {project.status}
+                {/* Status Badge */}
+                <span
+                  style={{
+                    display: 'inline-block',
+                    padding: '4px 12px',
+                    borderRadius: 20,
+                    fontSize: 12,
+                    fontWeight: 600,
+                    marginBottom: 16,
+                    background: 'rgba(245, 158, 11, 0.1)',
+                    color: '#FBBF24',
+                    border: '1px solid rgba(245, 158, 11, 0.25)',
+                  }}
+                >
+                  {p.status}
+                </span>
+
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: '#FFFFFF', marginBottom: 16 }}>
+                  {p.title}
+                </h3>
+
+                <div style={{ marginBottom: 12 }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: '#9B6DFF', display: 'block', marginBottom: 4 }}>
+                    المشكلة:
                   </span>
+                  <p style={{ fontSize: 14, color: 'rgba(245,243,250,0.65)', lineHeight: 1.6, margin: 0 }}>
+                    {p.problem}
+                  </p>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">{project.title}</h3>
-
-                <div className="space-y-4 mb-6">
-                  <div>
-                    <span className="text-brand-purple-glow text-xs font-bold block mb-1">المشكلة:</span>
-                    <p className="text-brand-soft-white/70 text-sm leading-relaxed">{project.problem}</p>
-                  </div>
-                  <div>
-                    <span className="text-brand-purple-glow text-xs font-bold block mb-1">الحل:</span>
-                    <p className="text-brand-soft-white/70 text-sm leading-relaxed">{project.solution}</p>
-                  </div>
+                <div style={{ marginBottom: 20 }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: '#9B6DFF', display: 'block', marginBottom: 4 }}>
+                    الحل:
+                  </span>
+                  <p style={{ fontSize: 14, color: 'rgba(245,243,250,0.65)', lineHeight: 1.6, margin: 0 }}>
+                    {p.solution}
+                  </p>
                 </div>
 
-                {/* Tech tags */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map((tag) => (
+                {/* Tags */}
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }}>
+                  {p.tags.map((tag, tIdx) => (
                     <span
-                      key={tag}
-                      className="px-2.5 py-1 rounded-md text-xs font-medium bg-white/[0.04] text-brand-soft-white/60 border border-white/[0.07] font-english"
-                      dir="ltr"
+                      key={tIdx}
+                      className="ltr-text"
+                      style={{
+                        padding: '4px 10px',
+                        borderRadius: 6,
+                        fontSize: 12,
+                        background: 'rgba(255,255,255,0.04)',
+                        border: '1px solid rgba(255,255,255,0.07)',
+                        color: 'rgba(245,243,250,0.6)',
+                        fontFamily: 'Space Grotesk, sans-serif',
+                      }}
                     >
                       {tag}
                     </span>
@@ -97,35 +172,55 @@ export default function ProjectsSection() {
                 </div>
               </div>
 
-              {/* FIX 17: "عرض المشروع" Buttons — Disabled State */}
-              <div className="pt-2">
+              {/* STEP 4: Disabled placeholder project button */}
+              <div>
                 <button
-                  type="button"
                   disabled
-                  className="w-full text-brand-soft-white/50 text-sm font-medium border border-white/10 rounded-xl px-4 py-2.5 text-center cursor-not-allowed bg-white/[0.02] opacity-60 hover:opacity-60 transition-opacity"
-                  title="قريباً — المشروع تحت التطوير"
+                  style={{
+                    width: '100%',
+                    padding: '10px 20px',
+                    background: 'transparent',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    borderRadius: 8,
+                    color: 'rgba(245,243,250,0.35)',
+                    fontSize: 14,
+                    cursor: 'not-allowed',
+                    fontFamily: 'inherit',
+                  }}
                 >
-                  عرض المشروع (قريباً)
+                  عرض المشروع — قريباً
                 </button>
               </div>
-            </GlassCard>
+            </motion.div>
           ))}
         </div>
 
         {/* Bottom CTA */}
-        <motion.div
-          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-          whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-center space-y-3"
-        >
-          <h3 className="text-2xl sm:text-3xl font-bold text-white">عندك مشروع في دماغك؟</h3>
-          <p className="text-brand-soft-white/70 text-base mb-6">نتكلم ونشوف إيه الممكن.</p>
-          <CTAButton href="#contact" variant="primary">
+        <div style={{ textAlign: 'center' }}>
+          <h3 style={{ fontSize: 24, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>
+            عندك مشروع في دماغك؟
+          </h3>
+          <p style={{ fontSize: 16, color: 'rgba(245,243,250,0.65)', marginBottom: 24 }}>
+            نتكلم ونشوف إيه الممكن.
+          </p>
+          <a
+            href="#contact"
+            style={{
+              display: 'inline-block',
+              padding: '14px 36px',
+              background: 'linear-gradient(135deg, #6C3BFF, #9B6DFF)',
+              color: '#FFFFFF',
+              borderRadius: 10,
+              fontWeight: 700,
+              fontSize: 16,
+              textDecoration: 'none',
+              boxShadow: '0 4px 24px rgba(108,59,255,0.4)',
+              transition: 'all 0.3s ease',
+            }}
+          >
             تواصل معنا
-          </CTAButton>
-        </motion.div>
+          </a>
+        </div>
       </div>
     </section>
   );
