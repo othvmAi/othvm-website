@@ -1,22 +1,5 @@
 import type { Metadata } from 'next';
-import { Noto_Kufi_Arabic, Space_Grotesk } from 'next/font/google';
 import './globals.css';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
-
-const notoKufi = Noto_Kufi_Arabic({
-  subsets: ['arabic'],
-  weight: ['400', '600', '700', '900'],
-  variable: '--font-arabic',
-  display: 'swap',
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-latin',
-  display: 'swap',
-});
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://othvm-website.vercel.app';
 
@@ -42,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@othvmai',
-    title: 'OTHVM',
+    title: 'OTHVM — اخلّي التكنولوجيا تشتغل ليك',
     description: 'حلول تكنولوجية عملية للشركات والأفراد.',
     images: [`${BASE_URL}/logo/OTHVM.png`],
   },
@@ -51,14 +34,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className={`${notoKufi.variable} ${spaceGrotesk.variable}`}>
+    <html lang="ar" dir="rtl">
       <head>
-        <link rel="canonical" href={BASE_URL} />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body style={{ fontFamily: 'var(--font-arabic), sans-serif' }}>
-        <Navbar />
+      <body>
         {children}
-        <Footer />
       </body>
     </html>
   );
