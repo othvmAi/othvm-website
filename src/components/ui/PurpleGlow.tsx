@@ -1,18 +1,26 @@
 interface PurpleGlowProps {
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: number | string;
+  color?: string;
+  opacity?: number;
 }
 
-export default function PurpleGlow({ className = '', size = 'md' }: PurpleGlowProps) {
-  const sizeClasses = {
-    sm: 'w-[300px] h-[300px]',
-    md: 'w-[600px] h-[600px]',
-    lg: 'w-[900px] h-[900px]',
-  };
+export default function PurpleGlow({
+  className = '',
+  size = 500,
+  color = 'rgba(108, 59, 255, 0.15)',
+}: PurpleGlowProps) {
+  const dimension = typeof size === 'number' ? `${size}px` : size;
 
   return (
     <div
-      className={`purple-glow-orb ${sizeClasses[size]} ${className}`}
+      className={`absolute rounded-full pointer-events-none -z-0 ${className}`}
+      style={{
+        width: dimension,
+        height: dimension,
+        background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
+        filter: 'blur(60px)',
+      }}
       aria-hidden="true"
     />
   );

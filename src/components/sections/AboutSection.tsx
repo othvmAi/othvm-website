@@ -9,18 +9,24 @@ export default function AboutSection() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section id="about" className="relative py-24 sm:py-32">
-      <PurpleGlow className="top-0 right-0 translate-x-1/3 -translate-y-1/3" size="md" />
+    <section id="about" className="relative py-24 sm:py-32 overflow-hidden">
+      {/* Background glow */}
+      <PurpleGlow
+        size={500}
+        color="rgba(108, 59, 255, 0.10)"
+        className="top-0 right-0 translate-x-1/3 -translate-y-1/3"
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* FIX 6: Section label formatted with spaces "06 / عن OTHVM" */}
         <SectionLabel number="06" label="عن OTHVM" />
 
         <motion.h2
           initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
           whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-16"
+          className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-16 text-white"
         >
           <span className="block">تكنولوجيا تشتغل ليك.</span>
           <span className="block text-brand-purple-glow mt-1">مش العكس.</span>
@@ -31,7 +37,7 @@ export default function AboutSection() {
           <motion.div
             initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
             whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="lg:col-span-7 space-y-6"
           >
@@ -49,20 +55,25 @@ export default function AboutSection() {
           {/* Founder Card - RTL left side */}
           <div className="lg:col-span-5">
             <GlassCard className="p-8 sm:p-10 text-center relative overflow-hidden" delay={0.2}>
-              {/* Subtle accent light */}
-              <div className="absolute top-0 right-1/2 translate-x-1/2 w-48 h-20 bg-brand-purple/20 blur-2xl pointer-events-none" />
-
-              {/* Founder photo placeholder */}
-              <div
-                className="w-36 h-36 rounded-2xl mx-auto mb-6 flex items-center justify-center relative overflow-hidden group shadow-[0_8px_30px_rgba(108,59,255,0.2)]"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(108,59,255,0.25) 0%, rgba(155,109,255,0.1) 100%)',
-                  border: '1px solid rgba(155,109,255,0.3)',
-                }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent" />
-                <span className="relative z-10 text-brand-soft-white/60 text-sm font-medium">
-                  [صورة المؤسس]
+              {/* FIX 8: Stylized Circular Founder Photo Placeholder */}
+              <div className="flex flex-col items-center mb-6">
+                <div
+                  className="w-[120px] h-[120px] sm:w-[160px] sm:h-[160px] rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-105"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(108,59,255,0.3), rgba(155,109,255,0.1))',
+                    border: '2px solid rgba(155,109,255,0.4)',
+                    boxShadow: '0 0 30px rgba(108,59,255,0.2)',
+                  }}
+                >
+                  <span
+                    className="text-white select-none font-bold"
+                    style={{ fontSize: '48px', fontFamily: 'var(--font-noto-kufi)' }}
+                  >
+                    ع
+                  </span>
+                </div>
+                <span className="text-brand-soft-white/50 text-[12px] mt-3">
+                  صورة المؤسس — قريباً
                 </span>
               </div>
 
@@ -75,7 +86,7 @@ export default function AboutSection() {
                   بيؤمن إن التكنولوجيا لازم تخدم الناس، مش العكس.
                 </p>
 
-                {/* Instagram link styled as glass pill */}
+                {/* FIX 5: Instagram link styled as glass pill with target="_blank" */}
                 <div className="pt-4">
                   <a
                     href="https://www.instagram.com/othvm_/"

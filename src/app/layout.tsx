@@ -17,21 +17,26 @@ const spaceGrotesk = Space_Grotesk({
   display: 'swap',
 });
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://othvm-website.vercel.app';
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://othvm.com'),
+  metadataBase: new URL(BASE_URL),
   title: 'OTHVM — اخلّي التكنولوجيا تشتغل ليك',
   description: 'OTHVM علامة تجارية مستقلة تقدم حلول تكنولوجية عملية: أتمتة، ربط أنظمة، أدوات مخصصة، ومنتجات رقمية للتعلم.',
   keywords: ['OTHVM', 'تكنولوجيا', 'أتمتة', 'ذكاء اصطناعي', 'AI', 'حلول تقنية', 'عربي'],
+  alternates: {
+    canonical: BASE_URL,
+  },
   openGraph: {
     title: 'OTHVM',
     description: 'حلول تكنولوجية عملية للشركات والأفراد.',
-    url: 'https://othvm.com',
+    url: BASE_URL,
     siteName: 'OTHVM',
     locale: 'ar_EG',
     type: 'website',
     images: [
       {
-        url: '/logo/OTHVM.png',
+        url: `${BASE_URL}/logo/OTHVM.png`,
         width: 800,
         height: 800,
         alt: 'OTHVM Logo',
@@ -43,6 +48,7 @@ export const metadata: Metadata = {
     site: '@othvmai',
     title: 'OTHVM',
     description: 'حلول تكنولوجية عملية للشركات والأفراد.',
+    images: [`${BASE_URL}/logo/OTHVM.png`],
   },
   robots: { index: true, follow: true },
   icons: {
@@ -58,6 +64,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl" className={`${notoKufiArabic.variable} ${spaceGrotesk.variable}`}>
+      <head>
+        <link rel="canonical" href={BASE_URL} />
+      </head>
       <body className="font-arabic bg-brand-dark text-white selection:bg-brand-purple/30 selection:text-white antialiased min-h-screen flex flex-col justify-between">
         <Navbar />
         <main className="flex-1 w-full overflow-hidden">
