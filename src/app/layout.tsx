@@ -4,9 +4,9 @@ import './globals.css';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://othvm-website.vercel.app';
 
 export const metadata: Metadata = {
-  title: 'OTHVM — اخلّي التكنولوجيا تشتغل ليك',
-  description: 'OTHVM علامة تجارية مستقلة تقدم حلول تكنولوجية عملية: أتمتة، ربط أنظمة، أدوات مخصصة، ومنتجات رقمية للتعلم.',
-  keywords: ['OTHVM', 'تكنولوجيا', 'أتمتة', 'ذكاء اصطناعي', 'AI', 'حلول تقنية', 'عربي'],
+  title: 'OTHVM | اخلّي التكنولوجيا تشتغل ليك — حلول ذكية وأتمتة متقدمة',
+  description: 'OTHVM علامة تكنولوجية مستقلة يقودها عثمان محمد، متخصصة في أتمتة العمليات، حلول الذكاء الاصطناعي، وربط الأنظمة للشركات والأفراد.',
+  keywords: ['OTHVM', 'عثمان محمد', 'تكنولوجيا', 'أتمتة', 'ذكاء اصطناعي', 'AI', 'Shopify', 'Web Development', 'Python', 'حلول برمجية'],
   metadataBase: new URL(BASE_URL),
   alternates: { canonical: BASE_URL },
   icons: {
@@ -14,8 +14,8 @@ export const metadata: Metadata = {
     apple: '/logo/OTHVM.png',
   },
   openGraph: {
-    title: 'OTHVM — اخلّي التكنولوجيا تشتغل ليك',
-    description: 'حلول تكنولوجية عملية للشركات والأفراد.',
+    title: 'OTHVM | اخلّي التكنولوجيا تشتغل ليك',
+    description: 'حلول تكنولوجية عملية، أتمتة متقدمة، وأنظمة ذكاء اصطناعي للشركات الطموحة.',
     url: BASE_URL,
     siteName: 'OTHVM',
     locale: 'ar_EG',
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@othvmai',
-    title: 'OTHVM — اخلّي التكنولوجيا تشتغل ليك',
-    description: 'حلول تكنولوجية عملية للشركات والأفراد.',
+    title: 'OTHVM | اخلّي التكنولوجيا تشتغل ليك',
+    description: 'حلول تكنولوجية عملية، أتمتة متقدمة، وأنظمة ذكاء اصطناعي للشركات الطموحة.',
     images: [`${BASE_URL}/logo/OTHVM.png`],
   },
   robots: { index: true, follow: true },
@@ -39,13 +39,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
